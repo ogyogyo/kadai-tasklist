@@ -8,7 +8,7 @@ class TasksController < ApplicationController
   end
   
   def new
-    @task = Tasks.new
+    @task = Task.new
   end
   
   def create
@@ -52,4 +52,5 @@ class TasksController < ApplicationController
   # Strong Parameter
   def task_params
     params.require(:task).permit(:content)
+  end
 end
