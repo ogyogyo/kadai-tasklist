@@ -1,4 +1,11 @@
 class UsersController < ApplicationController
+  def index
+    @users = User.order(id: :desc).page(params[:page]).per(25)
+  end
+
+  def show
+    @user = User.find(params[:id])
+  end
 
   def new
     @user = User.new
@@ -8,10 +15,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      flash[:success] = 'ユーザーを登録しました。'
-      redirect_to root_url
+      flash[:success] = 'ユーザを登録しました。'
+      redirect_to @user
     else
-      flash.now[:danger] = 'ユーザーの登録に失敗しました。'
+      flash.now[:danger] = 'ユーザの登録に失敗しました。'
       render :new
     end
   end
