@@ -7,10 +7,10 @@ class SessionsController < ApplicationController
     password = params[:session][:password]
     if login(email, password)
       flash[:success] = 'ログインに成功しました。'
-      redirect_to root_url
+      redirect_to @user
     else
       flash.now[:danger] = 'ログインに失敗しました。'
-      render 'new'
+      render :new
     end
   end
 
@@ -22,13 +22,14 @@ class SessionsController < ApplicationController
 
   private
 
-  def login(email,password)
+  def login(email, password)
     @user = User.find_by(email: email)
     if @user && @user.authenticate(password)
-      #ログイン成功
+      # ログイン成功
       session[:user_id] = @user.id
       return true
     else
+      # ログイン失敗
       return false
     end
   end
